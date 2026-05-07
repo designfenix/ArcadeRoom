@@ -1,5 +1,6 @@
 # Emulador GBC funcional en Three.js
 
+
 Este proyecto corre un emulador de Game Boy/Game Boy Color y renderiza su framebuffer como textura en Three.js.
 
 - Core público: `grantgalitz/GameBoy-Online` vía paquete `gameboy` servido por Skypack/CDN.
@@ -10,6 +11,14 @@ Este proyecto corre un emulador de Game Boy/Game Boy Color y renderiza su frameb
 > Importante: estos comandos se ejecutan en la **terminal del sistema** (CMD/PowerShell/Bash), **no** dentro del intérprete interactivo de Python (`>>>`).
 
 ### Opción A (Linux/macOS)
+=======
+Ahora el proyecto **consume un repositorio público** para el core del emulador:
+
+- Core: `grantgalitz/GameBoy-Online` vía paquete `gameboy` servido por Skypack/CDN.
+- Render: textura de Three.js (`CanvasTexture`) usando el canvas real del emulador.
+
+## Ejecutar
+
 
 ```bash
 python3 -m http.server 5173
@@ -43,6 +52,8 @@ significa que ejecutaste el comando dentro de Python.
 - Presioná `Ctrl + D` (Linux/macOS).
 
 Después ejecutá el comando en la terminal normal.
+
+Abrir: http://localhost:5173
 
 ## Cómo funciona
 
