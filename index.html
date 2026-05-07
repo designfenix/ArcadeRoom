@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GBC + Three.js</title>
+    <style>
+      html, body { margin:0; height:100%; background:#0f1220; color:#e6e9ff; font-family:system-ui, sans-serif; }
+      #app { width:100%; height:100%; display:grid; place-items:center; }
+      .hud { position: fixed; top: 12px; left: 12px; background: rgba(0,0,0,.45); padding: 10px 12px; border-radius: 8px; }
+      .hud small { opacity:.85; display:block; max-width: 380px; }
+      button { margin-top:8px; }
+    </style>
+  </head>
+  <body>
+    <div class="hud">
+      <strong>GBC + Three.js (funcional)</strong>
+      <small>Usa un core público de emulación y renderiza su framebuffer en una malla 3D.</small>
+      <input id="romInput" type="file" accept=".gb,.gbc" />
+      <button id="startBtn">Cargar ROM y jugar</button>
+    </div>
+    <div id="app"></div>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
