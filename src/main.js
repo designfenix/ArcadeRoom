@@ -4,6 +4,7 @@ import Gameboy from 'https://cdn.skypack.dev/gameboy';
 const app = document.getElementById('app');
 const romInput = document.getElementById('romInput');
 const startBtn = document.getElementById('startBtn');
+const statusEl = document.getElementById('status');
 
 const emuCanvas = document.createElement('canvas');
 emuCanvas.width = 160;
@@ -39,24 +40,44 @@ const frameMesh = new THREE.Mesh(
 );
 frameMesh.position.z = -0.1;
 scene.add(frameMesh);
-scene.add(new THREE.DirectionalLight(0xffffff, 1.2).position.set(1, 1, 2).clone());
+
+const keyLight = new THREE.DirectionalLight(0xffffff, 1.2);
+keyLight.position.set(1, 1, 2);
+scene.add(keyLight);
 scene.add(new THREE.AmbientLight(0xffffff, 0.4));
 
 let running = false;
-startBtn.addEventListener('click', async () => {
-  const file = romInput.files?.[0];
-  if (!file) return;
 
-  const url = URL.createObjectURL(file);
+function setStatus(message, isError = false) {
+  if (!statusEl) return;
+  statusEl.textContent = message;
+  statusEl.style.color = isError ? '#ff9b9b' : '#c9d2ff';
+}
+
+function startEmulator(file) {
   emu.stop();
-  emu.loadRomFromFile(url, (err) => {
+  setStatus(`Cargando ${file.name}...`);
+
+  // El paquete "gameboy" suele esperar un File/Blob, no una URL temporal.
+  emu.loadRomFromFile(file, (err) => {
     if (err) {
       console.error(err);
+      setStatus('No se pudo cargar la ROM. Ver consola para detalles.', true);
       return;
     }
     emu.start();
     running = true;
+    setStatus(`ROM cargada: ${file.name}`);
   });
+}
+
+startBtn.addEventListener('click', () => {
+  const file = romInput.files?.[0];
+  if (!file) {
+    setStatus('Seleccioná una ROM .gb o .gbc antes de iniciar.', true);
+    return;
+  }
+  startEmulator(file);
 });
 
 function animate() {
